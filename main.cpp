@@ -1,4 +1,3 @@
-#include <cstdio>
 #include <iostream>
 #include <cassert>
 #include "HashSetCalculatorMD5.hpp"
@@ -86,6 +85,6 @@ int main()
    testBloomFilter();
    testBloomFilterFail();
    testBiggerTable();
-   puts("OK!");
+   std::cout << "OK!" << std::endl;
    return 0;
 }
