@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <string>
-//#include <cstdint>
 
 typedef std::vector<unsigned char> ByteBuffer;
 

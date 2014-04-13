@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cassert>
 #include "HashSetCalculatorMD5.hpp"
+#include "BloomFilter.hpp"
 
 void testHashSetCalculatorMD5()
 {
@@ -19,9 +20,24 @@ void testHashSetCalculatorMD5()
    assert(hashSet[2][0] == 0x3b);
 }
 
+void testBloomFilter()
+{
+   HashSetCalculatorMD5 hasher;
+
+   BloomFilter filter(hasher);
+
+   filter.feed("hello");
+   filter.feed("world");
+   
+   assert(filter.has("hello"));
+   assert(filter.has("world"));
+   assert(!filter.has("hell"));
+}
+
 int main()
 {
    testHashSetCalculatorMD5();
+   testBloomFilter();
    puts("OK!");
    return 0;
 }
