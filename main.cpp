@@ -52,18 +52,16 @@ void testBloomFilterFail()
 {
    HashSetCalculatorMD5 hasher(1, 1);
    BloomFilter filter(hasher);
-   for (unsigned char c = 0; c < 256; c++)
-   {
-      std::string str(&c, 1);
-      assert(!filter.has(str));
-      filter.feed(str);
-   }
+
+   filter.feed("-");
+   assert(filter.has("*"));
 }
 
 int main()
 {
    testHashSetCalculatorMD5();
    testBloomFilter();
+   testBloomFilterFail();
    puts("OK!");
    return 0;
 }
