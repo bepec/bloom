@@ -51,6 +51,22 @@ void testBloomFilterFail()
    assert(filter.has("*"));
 }
 
+void testBiggerTable()
+{
+   hashSetCalculatorMD5 hasher(4, 4);
+   BloomFilter filter(hasher);
+
+   filter.feed("hello");
+   filter.feed("world");
+   filter.feed("crazy");
+   filter.feed("boy");
+
+   assert(filter.has("hello"));
+   assert(filter.has("world"));
+   assert(filter.has("crazy"));
+   assert(filter.has("boy"));
+}
+
 int main()
 {
    testHashSetCalculatorMD5();
