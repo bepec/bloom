@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vector>
+#include <string>
+
 class BloomFilter
 {
 public:
@@ -8,9 +11,9 @@ public:
    {
    public:
       virtual ~IHashSetCalculator() {}
-      virtual size_t getSetSize() const = 0;
-      virtual size_t getHashSize() const = 0;
-      virtual std::vector<size_t> calculate(const std::string& ) const = 0;
+      virtual std::size_t getSetSize() const = 0;
+      virtual std::size_t getHashSize() const = 0;
+      virtual std::vector<std::size_t> calculate(const std::string& ) const = 0;
    };
 
    BloomFilter(IHashSetCalculator& hashSetCalculator);

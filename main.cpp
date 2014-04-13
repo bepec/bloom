@@ -7,30 +7,24 @@ void testHashSetCalculatorMD5()
 {
    HashSetCalculatorMD5 hasher(1, 3);
 
-   const std::vector<ByteBuffer>& hashSet =
+   const std::vector<size_t>& hashSet =
       hasher.calculate("hello world");
 
    assert(hashSet.size() == 3);
-   assert(hashSet[0].size() == 1);
-   assert(hashSet[0][0] == 0x5e);
-   assert(hashSet[1].size() == 1);
-   assert(hashSet[1][0] == 0xb6);
-   assert(hashSet[2].size() == 1);
-   assert(hashSet[2][0] == 0x3b);
+   assert(hashSet[0] == 0x5e);
+   assert(hashSet[1] == 0xb6);
+   assert(hashSet[2] == 0x3b);
 
 
    // next data set
    {
-      const std::vector<ByteBuffer>& hashSet =
+      const std::vector<size_t>& hashSet =
          hasher.calculate("hello");
 
       assert(hashSet.size() == 3);
-      assert(hashSet[0].size() == 1);
-      assert(hashSet[0][0] == 0x5d);
-      assert(hashSet[1].size() == 1);
-      assert(hashSet[1][0] == 0x41);
-      assert(hashSet[2].size() == 1);
-      assert(hashSet[2][0] == 0x40);
+      assert(hashSet[0] == 0x5d);
+      assert(hashSet[1] == 0x41);
+      assert(hashSet[2] == 0x40);
    }
 }
 
