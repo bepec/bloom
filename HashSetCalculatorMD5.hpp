@@ -6,7 +6,7 @@
 class HashSetCalculatorMD5: public IHashSetCalculator
 {
 public:
-   HashSetCalculatorMD5();
+   HashSetCalculatorMD5(size_t hashSize, size_t setSize);
    ~HashSetCalculatorMD5();
 
    size_t getSetSize() const;
@@ -15,4 +15,7 @@ public:
    std::vector<ByteBuffer> calculate(const ByteBuffer& ) const;
    std::vector<ByteBuffer> calculate(const std::string& ) const;
 
+private:
+   size_t _hashSize;
+   size_t _setSize;
 };

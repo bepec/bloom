@@ -3,7 +3,7 @@
 
 BloomFilter::BloomFilter(IHashSetCalculator& hsc)
    : hashSetCalculator(hsc)
-   , filterMap(2 << 8, 0)
+   , filterMap(1 << 8, 0)
 {
 }
 

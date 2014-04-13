@@ -5,7 +5,7 @@
 
 void testHashSetCalculatorMD5()
 {
-   HashSetCalculatorMD5 hasher;
+   HashSetCalculatorMD5 hasher(1, 3);
 
    const std::vector<ByteBuffer>& hashSet =
       hasher.calculate("hello world");
@@ -36,7 +36,7 @@ void testHashSetCalculatorMD5()
 
 void testBloomFilter()
 {
-   HashSetCalculatorMD5 hasher;
+   HashSetCalculatorMD5 hasher(1, 3);
 
    BloomFilter filter(hasher);
 

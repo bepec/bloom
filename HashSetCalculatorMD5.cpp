@@ -1,9 +1,14 @@
 #include <stdexcept>
 #include "HashSetCalculatorMD5.hpp"
 
-HashSetCalculatorMD5::HashSetCalculatorMD5()
+HashSetCalculatorMD5::HashSetCalculatorMD5(size_t hashSize, size_t setSize)
+   : _hashSize(hashSize)
+   , _setSize(setSize)
 {
-   //
+   if (_hashSize * _setSize > MD5_DIGEST_LENGTH)
+   {
+      throw std::logic_error("Digest length overflow!");
+   }
 }
 
 HashSetCalculatorMD5::~HashSetCalculatorMD5()
@@ -35,9 +40,12 @@ std::vector<ByteBuffer> HashSetCalculatorMD5::calculate(const void* buffer, size
 
    std::vector<ByteBuffer> result;
 
-   result.push_back(ByteBuffer(md5Digest, md5Digest+1));
-   result.push_back(ByteBuffer(md5Digest+1, md5Digest+2));
-   result.push_back(ByteBuffer(md5Digest+2, md5Digest+3));
+   for (size_t i = 0; i < _setSize; i++)
+   {
+      unsigned char* start = md5Digest + i*_hashSize;
+      unsigned char* end = md5Digest + (i+1)*_hashSize;
+      result.push_back(ByteBuffer(start, end));
+   }
 
    return result;
 }
