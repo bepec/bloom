@@ -48,6 +48,18 @@ void testBloomFilter()
    assert(!filter.has("hell"));
 }
 
+void testBloomFilterFail()
+{
+   HashSetCalculatorMD5 hasher(1, 1);
+   BloomFilter filter(hasher);
+   for (unsigned char c = 0; c < 256; c++)
+   {
+      std::string str(&c, 1);
+      assert(!filter.has(str));
+      filter.feed(str);
+   }
+}
+
 int main()
 {
    testHashSetCalculatorMD5();
