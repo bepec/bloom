@@ -12,10 +12,7 @@ public:
    size_t getSetSize() const;
    size_t getHashSize() const;
    std::vector<ByteBuffer> calculate(const void* buffer, size_t size) const;
-   ByteBuffer calculate(const ByteBuffer& ) const;
-   ByteBuffer calculate(const std::string& ) const;
+   std::vector<ByteBuffer> calculate(const ByteBuffer& ) const;
+   std::vector<ByteBuffer> calculate(const std::string& ) const;
 
-private:
-   mutable MD5_CTX md5Context;
-   mutable unsigned char md5Digest[MD5_DIGEST_LENGTH];
 };

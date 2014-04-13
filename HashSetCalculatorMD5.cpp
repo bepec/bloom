@@ -3,10 +3,7 @@
 
 HashSetCalculatorMD5::HashSetCalculatorMD5()
 {
-   if (0 == MD5_Init(&md5Context))
-   {
-      throw std::runtime_error("md5 init");
-   }
+   //
 }
 
 HashSetCalculatorMD5::~HashSetCalculatorMD5()
@@ -26,7 +23,11 @@ size_t HashSetCalculatorMD5::getHashSize() const
 
 std::vector<ByteBuffer> HashSetCalculatorMD5::calculate(const void* buffer, size_t size) const
 {
-   if ((0 == MD5_Update(&md5Context, buffer, size)) ||
+   MD5_CTX md5Context;
+   unsigned char md5Digest[MD5_DIGEST_LENGTH];
+
+   if ((0 == MD5_Init(&md5Context)) ||
+       (0 == MD5_Update(&md5Context, buffer, size)) ||
        (0 == MD5_Final(md5Digest, &md5Context)))
    {
       throw std::runtime_error("hash calculate");
@@ -41,12 +42,13 @@ std::vector<ByteBuffer> HashSetCalculatorMD5::calculate(const void* buffer, size
    return result;
 }
 
-ByteBuffer HashSetCalculatorMD5::calculate(const ByteBuffer& ) const
+std::vector<ByteBuffer> HashSetCalculatorMD5::calculate(const ByteBuffer& ) const
 {
 }
 
-ByteBuffer HashSetCalculatorMD5::calculate(const std::string& ) const
+std::vector<ByteBuffer> HashSetCalculatorMD5::calculate(const std::string& str) const
 {
+   return calculate(str.c_str(), str.length());
 }
 
 
