@@ -5,11 +5,11 @@
 class BloomFilter
 {
 public:
-   BloomFilter(IHashSetCalculator& );
+   BloomFilter(IHashSetCalculator& hashSetCalculator);
    void feed(const std::string& word);
    bool has(const std::string& word) const;
 
 private:
-   std::vector<unsigned char> filterMap;
-   const IHashSetCalculator& hashSetCalculator;
+   std::vector<bool> _filterMap;
+   const IHashSetCalculator& _hashSetCalculator;
 };
