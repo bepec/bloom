@@ -13,6 +13,7 @@ public:
       virtual ~IHashSetCalculator() {}
       virtual std::size_t getSetSize() const = 0;
       virtual std::size_t getHashSize() const = 0;
+      virtual std::size_t getMaxHashValue() const = 0;
       virtual std::vector<std::size_t> calculate(const std::string& ) const = 0;
    };
 
@@ -21,6 +22,6 @@ public:
    bool has(const std::string& word) const;
 
 private:
-   std::vector<bool> _filterMap;
    const IHashSetCalculator& _hashSetCalculator;
+   std::vector<bool> _filterMap;
 };

@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <iostream>
 #include <cassert>
 #include "HashSetCalculatorMD5.hpp"
 #include "BloomFilter.hpp"
@@ -28,6 +29,17 @@ void testHashSetCalculatorMD5()
    }
 }
 
+void testLongHashSetCalculatorMD5()
+{
+   HashSetCalculatorMD5 hasher(4, 2);
+
+   const std::vector<size_t>& hashSet = hasher.calculate("hello");
+
+   assert(hashSet.size() == 2);
+   assert(hashSet[0] == 0x2a40415d);
+   assert(hashSet[1] == 0x762a4bbc);
+}
+
 void testBloomFilter()
 {
    HashSetCalculatorMD5 hasher(1, 3);
@@ -53,7 +65,7 @@ void testBloomFilterFail()
 
 void testBiggerTable()
 {
-   hashSetCalculatorMD5 hasher(4, 4);
+   HashSetCalculatorMD5 hasher(4, 4);
    BloomFilter filter(hasher);
 
    filter.feed("hello");
@@ -70,8 +82,10 @@ void testBiggerTable()
 int main()
 {
    testHashSetCalculatorMD5();
+   testLongHashSetCalculatorMD5();
    testBloomFilter();
    testBloomFilterFail();
+   testBiggerTable();
    puts("OK!");
    return 0;
 }

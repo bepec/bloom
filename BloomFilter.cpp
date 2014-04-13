@@ -1,44 +1,38 @@
+#include <cassert>
 #include "BloomFilter.hpp"
-#include <iostream>
 
+using namespace std;
 
-static const std::size_t BITS_IN_BYTE = 8;
+static const size_t BITS_IN_BYTE = 8;
 
 BloomFilter::BloomFilter(IHashSetCalculator& hashSetCalculator)
    : _hashSetCalculator(hashSetCalculator)
-   , _filterMap(hashSetCalculator.getHashSize() << BITS_IN_BYTE, false)
+   , _filterMap(hashSetCalculator.getMaxHashValue()+1, false)
 {
-   std::cout << "ctor: size=" << _filterMap.size() << std::endl;
+   assert(_filterMap.size() != 0);
 }
 
-void BloomFilter::feed(const std::string& word)
+void BloomFilter::feed(const string& word)
 {
-   std::cout << "feed: " << word << ": " ;
-
-   std::vector<std::size_t> indices =
+   vector<size_t> indices =
       _hashSetCalculator.calculate(word);
 
-   for (std::size_t i = 0; i < indices.size(); i++)
+   for (size_t i = 0; i < indices.size(); i++)
    {
-      std::cout << std::hex << indices[i] << " ";
       _filterMap[indices[i]] = true;
    }
-   std::cout << std::endl;
 }
 
-bool BloomFilter::has(const std::string& word) const
+bool BloomFilter::has(const string& word) const
 {
-   std::cout << "has: " << word << ": " ;
-   std::vector<std::size_t> indices =
+   vector<size_t> indices =
       _hashSetCalculator.calculate(word);
 
-   for (std::size_t i = 0; i < indices.size(); i++)
+   for (size_t i = 0; i < indices.size(); i++)
    {
-      std::cout << std::hex << indices[i] << " ";
       if (!_filterMap[indices[i]])
          return false;
    }
-   std::cout << std::endl;
 
    return true;
 }

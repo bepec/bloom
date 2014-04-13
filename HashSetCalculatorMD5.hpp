@@ -11,10 +11,12 @@ public:
 
    std::size_t getSetSize() const;
    std::size_t getHashSize() const;
+   std::size_t getMaxHashValue() const;
    std::vector<std::size_t> calculate(const void* buffer, std::size_t size) const;
    std::vector<std::size_t> calculate(const std::string& ) const;
 
 private:
    std::size_t _hashSize;
+   std::size_t _maxHashValue;
    std::size_t _setSize;
 };
