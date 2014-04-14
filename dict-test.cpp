@@ -28,9 +28,9 @@ int main(int argc, char* argv[])
    cout << "Read words: " << counter << endl;
    cout << "Please enter a word to check, empty line to finish." << endl;
 
-   do
+   while (getline(cin, word) && !word.empty())
    {
-      cin >> word;
+      cout << word.length() << endl;
       if (filter.has(word))
       {
          cout << "correct" << endl;
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
       {
          cout << "unknown" << endl;
       }
-   } while (!word.empty());
+   }
 
    return 0;
 }
