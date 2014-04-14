@@ -1,16 +1,19 @@
 #include <stdexcept>
 #include <limits>
+#include <climits>
 #include "HashSetCalculatorMD5.hpp"
 
 using namespace std;
 
 HashSetCalculatorMD5::HashSetCalculatorMD5(size_t hashSize, size_t setSize)
    : _hashSize(hashSize)
-   , _maxHashValue((static_cast<size_t>(1) << (8*_hashSize)) - 1)
+   , _maxHashValue((1ULL << (CHAR_BIT*_hashSize)) - 1)
    , _setSize(setSize)
 {
-   if ((0 == _hashSize) || (0 == _setSize) ||
-       (_hashSize > sizeof(size_t)) ||
+   if ((0 == _hashSize) ||
+       (0 == _maxHashValue) ||
+       (0 == _setSize) ||
+       (_hashSize >= sizeof(size_t)) ||
        (_hashSize * _setSize > MD5_DIGEST_LENGTH))
    {
       throw logic_error("Bad hash parameters");
@@ -52,17 +55,14 @@ vector<size_t> HashSetCalculatorMD5::calculate(const void* buffer, size_t size) 
 
    vector<size_t> result;
 
-   // below would work on little-endian only
+   // little-endian only
 
-   // make mask to trim indices to defined hash size
-   size_t trimBitsMask = 
-      numeric_limits<size_t>::max() >> (8*(sizeof(size_t)-_hashSize));
-
+   unsigned char* start = md5Digest;
    for (size_t i = 0; i < _setSize; i++)
    {
-      unsigned char* start = md5Digest + i*_hashSize;
-      size_t index = *reinterpret_cast<size_t*>(start) & trimBitsMask;
+      size_t index = *reinterpret_cast<size_t*>(start) & _maxHashValue;
       result.push_back(index);
+      start += _hashSize;
    }
 
    return result;

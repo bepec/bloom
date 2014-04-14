@@ -30,13 +30,13 @@ void testHashSetCalculatorMD5()
 
 void testLongHashSetCalculatorMD5()
 {
-   HashSetCalculatorMD5 hasher(4, 2);
+   HashSetCalculatorMD5 hasher(3, 2);
 
    const std::vector<size_t>& hashSet = hasher.calculate("hello");
 
    assert(hashSet.size() == 2);
-   assert(hashSet[0] == 0x2a40415d);
-   assert(hashSet[1] == 0x762a4bbc);
+   assert(hashSet[0] == 0x40415d);
+   assert(hashSet[1] == 0x4bbc2a);
 }
 
 void testBloomFilter()
@@ -64,7 +64,7 @@ void testBloomFilterFail()
 
 void testBiggerTable()
 {
-   HashSetCalculatorMD5 hasher(4, 4);
+   HashSetCalculatorMD5 hasher(3, 4);
    BloomFilter filter(hasher);
 
    filter.feed("hello");
@@ -80,10 +80,15 @@ void testBiggerTable()
 
 int main()
 {
+   std::cout << "testHashSetCalculatorMD5" << std::endl;
    testHashSetCalculatorMD5();
+   std::cout << "testLongHashSetCalculatorMD5" << std::endl;
    testLongHashSetCalculatorMD5();
+   std::cout << "testBloomFilter" << std::endl;
    testBloomFilter();
+   std::cout << "testBloomFilterFail" << std::endl;
    testBloomFilterFail();
+   std::cout << "testBiggerTable" << std::endl;
    testBiggerTable();
    std::cout << "OK!" << std::endl;
    return 0;
